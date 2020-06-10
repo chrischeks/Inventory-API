@@ -20,7 +20,3 @@ Install PM2 if not yet installed
 To start the server run:
 
 `$ pm2 start boot.json`
-
-## Install/Run (Docker) - Ensure you have pulled the `servers` project and started up the container
-
-`docker-compose up -d`
