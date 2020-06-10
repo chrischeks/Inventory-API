@@ -1,0 +1,1089 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API documentation for the inventory backend service",
+    "version": "1.0.0",
+    "title": "Quabbly Inventory API",
+    "termsOfService": "http://dev.quabbly.com/terms/",
+    "contact": {
+      "email": "team@photizzo.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "p-inventory-api-dev.quabbly.com",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "Inventory Category Management",
+      "description": "Create, read and update category"
+    },
+    {
+      "name": "Inventory Settings Management",
+      "description": ""
+    },
+    {
+      "name": "Inventory Item Management",
+      "description": ""
+    },
+    {
+      "name": "Inventory Requisition Management",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/inventory/category": {
+      "post": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Add a new inventory category",
+        "description": "",
+        "operationId": "InventoryCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "customer object that needs to be added to the db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InventoryCategory"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "schema": {
+              "$ref": "#/definitions/CreateInventoryCategorySuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Find all inventory categories",
+        "description": "A list of all inventory categories",
+        "operationId": "listInventoryCategories",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "$ref": "#/definitions/CreateInventoryCategorySuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/category/property_types": {
+      "get": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Find all inventory categories",
+        "description": "A list of all inventory categories property types",
+        "operationId": "listInventoryCategoriesPropertyTypes",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "$ref": "#/definitions/CreateInventoryCategorySuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    
+    "/invntory/category/:id": {
+    "get": {
+      "tags": [
+        "Inventory Category Management"
+      ],
+      "summary": "get existing inventory item by id",
+      "description": "",
+      "operationId": "getInventoryCategoryById",
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS"
+        },
+        "400": {
+          "description": "Invalid ID supplied"
+        },
+        "404": {
+          "description": "not found"
+        },
+        "405": {
+          "description": "Validation exception"
+        }
+      },
+      "security": [
+        {
+          "quabbly_auth": [
+            "write:pets",
+            "read:pets"
+          ]
+        }
+      ]
+    }
+  },
+  
+    "/inventory/category/:id": {
+      "put": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Update existing category record",
+        "description": "",
+        "operationId": "updateInventoryCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "inventory category object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateInventoryCategory"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "category not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/category/suspend/:id": {
+      "patch": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Suspend existing category",
+        "description": "",
+        "operationId": "susInventoryCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "category not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/category/unsuspend:id": {
+      "patch": {
+        "tags": [
+          "Inventory Category Management"
+        ],
+        "summary": "Unsuspend existing category record",
+        "description": "",
+        "operationId": "unsuspendInventoryCategory",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "category not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/setings": {
+      "put": {
+        "tags": [
+          "Inventory Settings Management"
+        ],
+        "summary": "Create settings",
+        "description": "",
+        "operationId": "InventorySettings",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "customer object that needs to be added to the db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InventorySettings"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "schema": {
+              "$ref": "#/definitions/CreateInventoryCategorySuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Inventory Settings Management"
+        ],
+        "summary": "Fetch settings",
+        "description": "listinventory settings",
+        "operationId": "listInventorySettings",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "$ref": "#/definitions/ListInventorySettingsSuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    
+  "/inventory/requisitions": {
+  "post": {
+    "tags": [
+      "Inventory Requisition Management"
+    ],
+    "summary": "Create Requisition",
+    "description": "",
+    "operationId": "InventoryRequisition",
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "parameters": [
+      {
+        "in": "body",
+        "name": "body",
+        "description": "customer object that needs to be added to the db",
+        "required": true,
+        "schema": {
+          "$ref": "#/definitions/InventoryRequisition"
+        }
+      }
+    ],
+    "responses": {
+      "201": {
+        "description": "CREATED",
+        "schema": {
+          "$ref": "#/definitions/InventoryRequisition"
+        }
+      },
+      "400": {
+        "description": "FAILED_VALIDATION"
+      },
+      "500": {
+        "description": "ERROR"
+      }
+    },
+    "security": [
+      {
+        "quabbly_auth": [
+          "write:pets",
+          "read:pets"
+        ]
+      }
+    ]
+  },
+  "get": {
+    "tags": [
+      "Inventory Requisition Management"
+    ],
+    "summary": "Fetch requisitions",
+    "description": "listinventory requisitions",
+    "operationId": "listInventoryRequisitions",
+    "produces": [
+      "application/json"
+    ],
+    "responses": {
+      "200": {
+        "description": "SUCCESS",
+        "schema": {
+          "$ref": "#/definitions/ListInventoryRequisitionsSuccess"
+        }
+      },
+      "400": {
+        "description": "FAILED_VALIDATION"
+      },
+      "500": {
+        "description": "ERROR"
+      }
+    },
+    "security": [
+      {
+        "quabbly_auth": [
+          "write:pets",
+          "read:pets"
+        ]
+      }
+    ]
+  }
+},
+    
+    
+    "/inventory/item": {
+      "post": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "Add inventory item",
+        "description": "",
+        "operationId": "InventoryItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "customer object that needs to be added to the db",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InventoryItem"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "schema": {
+              "$ref": "#/definitions/CreateInventoryCategorySuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "Fetch all inventory items",
+        "description": "A list of all inventory items",
+        "operationId": "listInventoryItems",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "$ref": "#/definitions/ListInventoryItemSuccess"
+            }
+          },
+          "400": {
+            "description": "FAILED_VALIDATION"
+          },
+          "500": {
+            "description": "ERROR"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    
+    "/inventory/items/search": {
+      "get": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "Searchan existing inventory with name or sku",
+        "description": "",
+        "operationId": "searchInventoryItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "item or sku not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+  "/inventory/item/:id": {
+    "get": {
+      "tags": [
+        "Inventory Item Management"
+      ],
+      "summary": "get existing inventory item by id",
+      "description": "",
+      "operationId": "getInventoryItemById",
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS"
+        },
+        "400": {
+          "description": "Invalid ID supplied"
+        },
+        "404": {
+          "description": "not found"
+        },
+        "405": {
+          "description": "Validation exception"
+        }
+      },
+      "security": [
+        {
+          "quabbly_auth": [
+            "write:pets",
+            "read:pets"
+          ]
+        }
+      ]
+    }
+  },
+  
+    "/invetory/item/:id": {
+      "put": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "Update existing inventory item record",
+        "description": "",
+        "operationId": "updateInventoryItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "inventory item object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateInventoryItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "category not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/item/approve/:id": {
+      "patch": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "approve existing inventory item",
+        "description": "",
+        "operationId": "approveInventoryItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "item not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/inventory/item/decline/:id": {
+      "patch": {
+        "tags": [
+          "Inventory Item Management"
+        ],
+        "summary": "decline inventory item",
+        "description": "",
+        "operationId": "declineInventoryItem",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "inventory item object that needs to be delcined",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/delcineInventoryItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "item not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "quabbly_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "quabbly_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://p-user-api-dev.quabbly.com/swagger-ui.html",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "InventoryCategory": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "IRF250"
+        },
+        "description": {
+          "type": "string",
+          "example": "Metallic oxide semi-conductor field effect trasistor"
+        },
+        "parentCategoryId": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        },
+        "properties": {
+          "type": "object",
+          "example": [
+            {
+              "name": "component",
+              "description": "rectifier",
+              "type": "dropdown",
+              "options": [
+                "options",
+                "options"
+              ],
+              "required": true
+            }
+          ]
+        },
+        "barcode": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "InventorySettings": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "enableApprovalForProcurement": {
+          "type": "string",
+          "example": "true"
+        },
+        "enableRequisitionApprover": {
+          "type": "string",
+          "example": "true"
+        },
+        "procurementApprovers": {
+          "type": "string",
+          "example": [
+            "test@quabbly.com",
+            "tester@quabbly.com"
+          ]
+        },
+        "requisitionApprovers": {
+          "type": "string",
+          "example": [
+            "test@quabbly.com",
+            "tester@quabbly.com"
+          ]
+        },
+        "maxAprovalDelay": {
+          "type": "string",
+          "example": "3h"
+        }
+      }
+    },
+    
+    "InventoryRequisition": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "cart": {
+          "type": "object",
+          "example": [
+            {
+              "itemId": "5cacc81d49c12239e8b37816",
+              "quantity": 3
+            },
+            {
+              "itemId": "5cacc81d49c12239e8b37816",
+              "quantity": 10
+            }
+          ]
+        },
+        "comment": {
+          "type": "string",
+          "example": "avalanche shoothrough with flyback topology"
+        }
+      }
+    },
+    "InventoryItem": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "IRF250"
+        },
+        "description": {
+          "type": "string",
+          "example": "Metallic oxide semi-conductor field effect trasistor"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        },
+        "image": {
+          "type": "string",
+          "example": "token"
+        },
+        "category": {
+          "type": "string",
+          "example": "5cacc81d49c12239e8b37816"
+        },
+        "properties": {
+          "type": "object",
+          "example": [
+            {
+              "id": "5cacc81d49c12239e8b37816",
+              "value": "test"
+            }
+          ]
+        }
+      }
+    },
+    "InventoryCategoryListSuccess": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "example": "2019-01-13T23:33:21.586Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        }
+      }
+    },
+    "ListInventorySettingsSuccess": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "example": "2019-01-13T23:33:21.586Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        }
+      }
+    },
+    
+    "ListInventoryRequisitionsSuccess": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "example": "2019-01-13T23:33:21.586Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        }
+      }
+    },
+    "ListInventoryItemSuccess": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "example": "2019-01-13T23:33:21.586Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        }
+      }
+    },
+    "UpdateInventoryCategory": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "fod3180"
+        },
+        "description": {
+          "type": "string",
+          "example": "An electrical component"
+        },
+        "properties": {
+          "type": "object",
+          "example": [
+            {
+              "name": "component",
+              "description": "rectifier",
+              "type": "dropdown",
+              "options": [
+                "options1",
+                "options2"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "updateInventoryItem": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "IRF250"
+        },
+        "description": {
+          "type": "string",
+          "example": "Metallic oxide semi-conductor field effect trasistor"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "1"
+        },
+        "image": {
+          "type": "string",
+          "example": "token"
+        },
+        "category": {
+          "type": "string",
+          "example": "5cacc81d49c12239e8b37816"
+        },
+        "properties": {
+          "type": "object",
+          "example": [
+            {
+              "id": "5cacc81d49c12239e8b37816",
+              "value": "test"
+            }
+          ]
+        }
+      }
+    },
+    "delcineInventoryItem": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "comment": {
+          "type": "string",
+          "example": "This can be optional"
+        }
+      }
+    },
+    "CreateInventoryCategorySuccess": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "example": "2019-01-13T23:33:21.586Z"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5c3bcfc1eb99dd0010d335fe"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
